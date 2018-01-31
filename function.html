@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /*****************************************************************************************/
+    /*1、
+    判断质数
+    */
+    function isPrime(num) {
+        for (var i = 2; i < num; i++) {
+            if (num % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    console.log(isPrime(12));
+    /*****************************************************************************************/
+
+
+    /*2、
+    计算 [m, n] 范围中, 所有的质数之和
+    */
+    function sumPrimes(m,n) {
+        var sum = 0;
+        for(var i = m; i <= n; i++){
+            if(isPrime(i)){
+                sum += i;
+            }
+        }
+        return sum;
+    }
+
+    console.log(sumPrimes(1, 100));
+
+    /*****************************************************************************************/
+
+    /*3、
+    * 计算n的阶乘(n!)
+    * */
+    //方法1:
+    function factorial(n){
+        var jie = 1;
+        for(var i = 1; i <= n; i++){
+            jie *= i;
+        }
+        return jie;
+    }
+    //方法2:利用递归函数
+ /*   function factorial(n) {
+        if(n==1) return 1;
+        return n*factorial(n-1);
+    }*/
+    console.log(factorial(10));
+
+    /*****************************************************************************************/
+
+    /*4、
+    计算n的阶乘之和(1! + 2! + 3! + ...+ n!)
+    */
+
+    function factorialSum(n){
+        var sum = 0;
+        for(var i = 1; i <= n; i++){
+            sum += factorial(i);
+        }
+        return sum;
+    }
+
+    console.log(factorialSum(11));
+
+    /*****************************************************************************************/
+
+    /*5、
+    判断输入的数是否为四位数
+    * */
+    function isFourOfNum(num) {
+        //注:Number.isInteger() 方法用来判断给定的参数是否为整数。
+        if(!Number.isInteger(+num) || +num < 1000 || +num > 9999){
+            return false;
+        }
+        return true;
+    }
+
+    console.log(isFourOfNum(100));
+
+    /****************************************************************************************/
+
+    /*6、
+      计算一个四位数各个位数之和
+    * */
+    // var num = +prompt("请输入一个四位的整数:");
+function sumOfFoursNum(num) {
+    if(!isFourOfNum(+num)){
+        return false;
+    }else{ // 1234
+        var ge = +num % 10;
+        var shi = parseInt(+num % 100 / 10);
+        var bai = parseInt(+num % 1000 / 100);
+        var qian = parseInt(+num / 1000);
+        var sum = ge + shi + bai + qian;
+    }
+    return sum;
+}
+
+    console.log(sumOfFoursNum(1234));
+
+    /************************************************************************************/
+
+    /*7、
+     判断是否为闰年
+    * */
+  function isLeapYear(year) {
+      if((+year%4==0 && +year%100!=0) || (+year%400==0)){
+            return true;
+      }else {
+          return false;
+      }
+  }
+    // function isLeapYear(year){
+    //     return year % 4 == 0 && year % 100 != 0 || year % 400 == 0;
+    // }
+    console.log(isLeapYear(2000));
+
+    /***************************************************************************************/
+
+    /*8、
+      页面显示[1000, 9999]中所有的闰年年份, 并以每35个年份换行
+   */
+    function showLeapYears(from, to){
+        for (var i = from, count = 0; i <= to; i++){
+            if (isLeapYear(i)){
+                document.write(i + " ");
+                count++;
+                if (count % 35 == 0){
+                    document.write("<br><br>")
+                }
+            }
+        }
+    }
+
+    showLeapYears(1000, 9999);
+
+    /**********************************************************************************/
+
+    /*9、
+      生成指定范围内的随机的整数
+    * */
+
+    function randomInt(from, to){ // [from, to]  [15, 50]
+        return parseInt(Math.random() * (to - from + 1) + from)
+    }
+
+    console.log(randomInt(20, 200));
+
+    /*********************************************************************************/
+
+    /*10、
+      显示用户输入时间的下一秒
+    * */
+
+    function nexTimes(h,m,s){
+        var temp = 0;  // 表示向前进地址
+        var str="";
+        s++;
+        if(s >= 60){
+            temp = parseInt(s / 60);
+            s %= 60;
+        }
+        m += temp;
+        temp = 0;
+        if(m >= 60){
+            temp = parseInt(m / 60);
+            m %= 60;
+        }
+        h += temp;
+        if(h >= 24){
+            h %= 24;
+        }
+        str=h + " : " + m + " : " + s;
+        return str;
+    }
+
+    console.log(nexTimes(23, 59, 59));
+
+    /***************************************************************************************/
+
+    /*11、
+      计算鸡兔同笼问题
+    * */
+
+    function questionForChickenAndRabbit(x,y) {
+        for (x=1; true; x++, y = 35 - x){
+            if (x * 2 + y * 4 == 94){
+                return x+" "+y;
+            }
+        }
+    }
+
+    console.log(questionForChickenAndRabbit());//注:x表示鸡,y表示兔
+
+    /************************************************************************************/
+
+    /*12、
+      计算两个数的最大公约数(GCM)
+    * */
+    function GCM(m,n) {
+        var min = m < n ? m : n;
+        for(var i = min; i > 0; i--){
+            if(m % i == 0 && n % i == 0){
+                  return "最大公约数"+i;
+            }
+        }
+    }
+    console.log(GCM(120,80));
+
+    /*****************************************************************************************/
+
+    /*13、
+      计算两个数的最小公倍数(LCM)
+    * */
+
+    function LCM(m,n) {
+        var max = m > n ? m : n;
+        for(var i = max; true; i++){
+            if(i % m == 0 && i % n == 0){
+                return "最小公倍数:" + i;
+            }
+        }
+    }
+
+    console.log(LCM(120,80));
+
+    /***************************************************************************************/
+
+    /*14、
+      计算斐波那契数列的第n项的值
+      月数:1  2  3  4  5  6     n
+    对数:1  1  2  3  5  8  ..   (n-1)+(n-2)    斐波那契数列
+    */
+
+    function fibonacciNumberOfN(n) {
+        var num;  // 第n项的数列那个值
+        var pre1 = 1;  // 第n项前面的两项
+        var pre2 = 1;
+        for (var i = 1; i <= n; i++){
+            if (i == 1 ||i == 2 ){
+                num = 1;
+            }else{
+                num = pre1 + pre2;  //前一项加后一项就等于当前这个数的值
+            }
+            pre1 = pre2;
+            pre2 = num; //动态的把该值前面的两项数据更换
+            if(i==n){
+                return num;
+            }
+        }
+    }
+
+    console.log(fibonacciNumberOfN(30));
+
+    /****************************************************************************************/
+
+    /*15、
+      弧度转成角度和角度转成弧度
+    * */
+    /*弧度转成角度*/
+    function toDegree(arc){
+        return arc / Math.PI * 180;
+    }
+    /*角度转成弧度*/
+    function toArc(deg){
+        return deg / 180 * Math.PI;
+    }
+
+    /****************************************************************************************/
+
+    /*16、
+       先按照长度的升序来排, 如果长度相等, 则按照字母表的降序来排
+    */
+
+    var ss = ["abc", "a", "d", "c", "aaa"];
+    ss.sort(function (a, b){
+        // return b.localeCompare(a);
+        // return b.length - a.length
+        if(a.length == b.length){
+            return -b.localeCompare(a);
+        }else{
+            return a.length - b.length;
+        }
+    });
+    console.log(ss);
+
+    /*****************************************************************************************/
+
+    /*17、
+       排序:升序和降序
+    */
+   /* 升序:*/
+    // sort()方法
+    var sortAsc = [10,20];
+    sortAsc.sort(function (a, b){
+            return a - b;   //a > b 就返回正数
+        })
+
+    console.log(sortAsc);
+
+
+   /*降序:*/
+    // sort()方法
+    var sortDesc=[10,20];
+    sortDesc.sort(function (a, b){
+        return b - a; //a > b 就返回负数
+    })
+
+    console.log((sortDesc));
+    // 冒泡排序
+    function maoPao(arr) {
+        for(var i = 0; i < arr.length - 1; i++){
+            for(var j = 0; j < arr.length - i - 1; j++){
+                if(arr[j] > arr[j + 1]){
+                    var temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+        }
+    }
+
+    /*******************************************************************************************/
+
+    /*18、
+       给数组升序
+    */
+</script>
+</body>
+</html>
